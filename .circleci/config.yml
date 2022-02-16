@@ -6,7 +6,7 @@ orbs:
   singularity: singularity/singularity@1.0.0
 
 workflows:
-  test-singularity:
+  build_container_docker_base_example:
     jobs:
       - singularity/build_container_docker_base:
           from-uri: ../test_container/python_app.def
