@@ -11,6 +11,7 @@ workflows:
       - singularity/build_container_docker_base:
           from-uri: ../test_container/python_app.def
           image: test_py.sif
+          
 #           context: dockerhub # has an env var called MY_ENV_VAR
   
 #     machine: true
