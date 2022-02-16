@@ -25,7 +25,7 @@ ENV PATH=/usr/local/go/bin:$PATH:$GOPATH/bin
 # RUN source ~/.bashrc
 
 # install dep for dependency resolution
-RUN go get -u github.com/golang/dep/cmd/dep
+#RUN go install github.com/golang/dep/cmd/dep@latest
 
 # download, compile and install Singularity
 RUN mkdir -p $GOPATH/src/github.com/sylabs
@@ -36,3 +36,5 @@ WORKDIR $GOPATH/src/github.com/sylabs/singularity-ce-3.9.0
 RUN ./mconfig
 RUN make -C ./builddir
 RUN make -C ./builddir install
+
+ENTRYPOINT ["singularity"]
