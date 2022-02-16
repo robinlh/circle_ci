@@ -2,21 +2,24 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+orbs:
+  singularity: singularity/singularity@1.0.0
+
 workflows:
   test-singularity:
     jobs:
-      - build:
-          context: dockerhub # has an env var called MY_ENV_VAR
-
-jobs:
-  build:
-    machine: true
-    steps:
-      - run: |
-          docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-          docker pull roblhall/singularity
+      - singularity/build_container_docker_base:
+        from-uri: ../test_container/python_app.def
+        image: test_py.sif
+#           context: dockerhub # has an env var called MY_ENV_VAR
+  
+#     machine: true
+#     steps:
+#       - run: |
+#           docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+#           docker pull roblhall/singularity
           
-          docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
+#           docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
           
-          docker cp circle_ci/test_container/ singularity_files:/sfiles
-          docker run --privileged --volumes-from singularity_files roblhall/singularity build python_app.simg python_app.def
+#           docker cp circle_ci/test_container/ singularity_files:/sfiles
+#           docker run --privileged --volumes-from singularity_files roblhall/singularity build python_app.simg python_app.def
