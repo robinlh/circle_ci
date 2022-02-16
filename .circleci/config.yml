@@ -16,4 +16,4 @@ jobs:
           docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
           docker pull roblhall/singularity
           docker images
-          docker run --privileged -v /circle_ci/test_container/:/root/singularity_files singularity build python_app.simg python_app.def
+          docker run --privileged -v /circle_ci/test_container/:/root/singularity_files roblhall/singularity build python_app.simg python_app.def
