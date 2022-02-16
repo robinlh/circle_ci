@@ -15,5 +15,8 @@ jobs:
       - run: |
           docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
           docker pull roblhall/singularity
-          docker images
-          docker run --privileged -v /circle_ci/test_container/:/root/singularity_files roblhall/singularity build python_app.simg python_app.def
+          
+          docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
+          
+          docker cp circle_ci/test_container/ singularity_files:/sfiles
+          docker run --privileged --volumes-from singularity_files roblhall/singularity build python_app.simg python_app.def
