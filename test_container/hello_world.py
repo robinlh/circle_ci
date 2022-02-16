@@ -1,0 +1,1 @@
+print("python app working from container")
