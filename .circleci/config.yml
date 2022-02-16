@@ -5,16 +5,15 @@ version: 2.1
 workflows:
   test-singularity:
     jobs:
-      - test:
+      - build:
           context: dockerhub # has an env var called MY_ENV_VAR
 
 jobs:
-  test:
-    docker:
-      - image: roblhall/singularity
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
+  build:
+    machine:
+      - image: ubuntu-2004:202010-01
     steps:
       - checkout
-      - run: singularity help build
+      - run: |
+          docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+          docker run --privileged -v /circle_ci/test_container/:/root/singularity_files singularity build python_app.simg python_app.def
