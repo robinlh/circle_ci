@@ -17,4 +17,4 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - run: --help
+      - run: singularity --help
