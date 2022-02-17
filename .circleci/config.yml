@@ -13,7 +13,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password_stdin
+          echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
           docker pull roblhall/singularity
 
           docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
