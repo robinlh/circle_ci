@@ -8,25 +8,28 @@ workflows:
           context: dockerhub # has an env var called MY_ENV_VAR
 jobs:
   test:
-    docker:
-      - image: roblhall/singularity
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
+    machine: true
+    working_directory: ~/circle_ci
     steps:
       - checkout
-      - run: singularity --help
-      - run: singularity build python_app.simg python_app.def
+      - run: |
+          docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+          docker pull roblhall/singularity
+
+          docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
+
+          docker cp circle_ci/test_container/ singularity_files:/sfiles
+          docker run --privileged --volumes-from singularity_files roblhall/singularity build python_app.simg python_app.def
+#     docker:
+#       - image: roblhall/singularity
+#         auth:
+#           username: $DOCKERHUB_USERNAME
+#           password: $DOCKERHUB_PASSWORD
+#     steps:
+#       - checkout
+#       - run: singularity --help
+#       - run: singularity build python_app.simg python_app.def
           
 #           context: dockerhub # has an env var called MY_ENV_VAR
   
-#     machine: true
-#     steps:
-#       - run: |
-#           docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-#           docker pull roblhall/singularity
-          
-#           docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
-          
-#           docker cp circle_ci/test_container/ singularity_files:/sfiles
-#           docker run --privileged --volumes-from singularity_files roblhall/singularity build python_app.simg python_app.def
+
