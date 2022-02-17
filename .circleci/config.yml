@@ -21,8 +21,8 @@ jobs:
           ls
 
           docker cp test_container/ singularity_files:/sfiles
-          docker run -it singularity_files /bin/bash ls /sfiles
-          docker run --privileged --volumes-from singularity_files roblhall/singularity build sfiles/test_container/python_app.simg sfiles/test_container/python_app.def
+#          docker run -it singularity_files /bin/bash ls /sfiles
+          docker run --privileged --volumes-from singularity_files roblhall/singularity build /sfiles/test_container/python_app.simg /sfiles/test_container/python_app.def
 #     docker:
 #       - image: roblhall/singularity
 #         auth:
