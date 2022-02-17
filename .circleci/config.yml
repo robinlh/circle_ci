@@ -18,7 +18,7 @@ jobs:
 
           docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
 
-          docker cp circle_ci/test_container/ singularity_files:/sfiles
+          docker cp ~/circle_ci/test_container/ singularity_files:/sfiles
           docker run --privileged --volumes-from singularity_files roblhall/singularity build python_app.simg python_app.def
 #     docker:
 #       - image: roblhall/singularity
