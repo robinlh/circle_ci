@@ -12,13 +12,12 @@ jobs:
     steps:
       - checkout
       - run: |
-      # log into Dockerhub and pull custom singularity container
           echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin 
           docker pull roblhall/singularity
-      # create ephemeral container with volume and copy files there
+          
           docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
           docker cp test_container/ singularity_files:/sfiles
-      # run singularity commands and copy output to host
+
           docker run --privileged --volumes-from singularity_files roblhall/singularity build /sfiles/test_container/python_app.simg /sfiles/test_container/python_app.def
           docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
 
