@@ -15,7 +15,7 @@ From: ubuntu:20.04
 A base Ubuntu 18 Singularity container with astronomy related python software for use as kernel in Jupyter
 
 %files
-    hello_world.py /opt
+    /sfiles/test_container/hello_world.py /opt
 
 %post
     # make opt directory for installs
