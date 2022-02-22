@@ -2,9 +2,9 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 workflows:
-  test-singularity:
+  build-singularity:
     jobs:
-      - test:
+      - build:
           context: dockerhub
 jobs:
   build:
