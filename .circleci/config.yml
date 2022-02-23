@@ -22,10 +22,14 @@ jobs:
             docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
  
       - run: |
+            touch test_container/token
+            echo $HUB_TOKEN
+            echo $HUB_TOKEN > test_container/token
             docker create -v /token_folder --name token_files alpine:3.4 /bin/true
-            docker cp test_container/ token_files:/token_folder
+            docker cp test_container/ token_files:/token_folder/
+            
             docker run --privileged --volumes-from token_files roblhall/singularity:3.9.1 --version
-            docker run --privileged --volumes-from token_files roblhall/singularity:3.9.1 remote add -i --password $HUB_TOKEN hinkskalle http://sregistry.ilifu.ac.za
+            docker run --privileged --volumes-from token_files roblhall/singularity:3.9.1 remote add -i --tokenfile /token_folder/test_container/token hinkskalle http://sregistry.ilifu.ac.za
               
     
   
