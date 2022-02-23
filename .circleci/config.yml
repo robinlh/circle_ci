@@ -24,7 +24,10 @@ jobs:
       - run: |
             touch test_container/token
             echo $HUB_TOKEN > test_container/token
-            docker run --privileged roblhall/singularity remote add -i --tokenfile "test_container/token" hinkskalle http://sregistry.ilifu.ac.za
+            
+            docker create -v /token --name token_files alpine:3.4 /bin/true
+            docker cp test_container/ token_files:/token
+            docker run --privileged --volumes-from token_files roblhall/singularity remote add -i --tokenfile "/token/test_container/token" hinkskalle http://sregistry.ilifu.ac.za
               
     
   
