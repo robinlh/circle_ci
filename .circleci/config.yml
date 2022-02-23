@@ -29,7 +29,7 @@ jobs:
             docker cp test_container/ token_files:/token_folder/
             
             docker run --privileged --volumes-from token_files roblhall/singularity:3.9.1 --version
-            docker run --privileged --volumes-from token_files roblhall/singularity:3.9.1 remote add -i --tokenfile /token_folder/test_container/token hinkskalle http://sregistry.ilifu.ac.za
+            docker run --privileged --volumes-from token_files roblhall/singularity:3.9.1 remote add -i --tokenfile $HUB_TOKEN hinkskalle http://sregistry.ilifu.ac.za
               
     
   
