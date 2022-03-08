@@ -24,7 +24,9 @@ jobs:
 
       - run: |
             pip3 install git+https://github.com/csf-ngs/hinkskalle-api
-            hinkli --base https://singularity.ngs.vbcf.ac.at/ login --user robh --password fL-nxVRlIpYKHTx_ob4DRcCxezBmXidW92jZ4fcNbmsXxKlEcvY3HQbmDIL7pt20
+            touch ~/.hink_api.yml
+            echo "hink_api_base: http://sregistry.ilifu.ac.za" >> ~/.hink_api.yml
+            echo "hink_api_key: el_lUexYsKQg2zWUmSz33yzt2vEFAscwF7eCKmFZD-6wva75MU0okiz3WgJuLdUV" >> ~/.hink_api.key
             hinkli push test_container/python_app.simg test_collection/python_app:latest
             
   
