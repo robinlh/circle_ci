@@ -24,9 +24,7 @@ jobs:
 
       - run: |
             pip3 install git+https://github.com/csf-ngs/hinkskalle-api
-            touch ~/.hink_api.yml
-            echo "hink_api_base: http://sregistry.ilifu.ac.za" >> ~/.hink_api.yml
-            echo "hink_api_key: el_lUexYsKQg2zWUmSz33yzt2vEFAscwF7eCKmFZD-6wva75MU0okiz3WgJuLdUV" >> ~/.hink_api.key
+            hinkli --base http://sregistry.ilifu.ac.za/ login --user robh --password $HINKLI_PASSWORD
             hinkli push test_container/python_app.simg test_collection/python_app:latest
             
   
