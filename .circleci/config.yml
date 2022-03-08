@@ -23,8 +23,7 @@ jobs:
             docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
 
       - run: |
-            sudo apt-get install -y python3-pip
-            pip install git+https://github.com/csf-ngs/hinkskalle-api
+            pip3 install git+https://github.com/csf-ngs/hinkskalle-api
             hinkli --help
     
   
