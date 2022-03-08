@@ -24,7 +24,8 @@ jobs:
 
       - run: |
             pip3 install git+https://github.com/csf-ngs/hinkskalle-api
-            hinkli --help
-    
+            hinkli --base https://singularity.ngs.vbcf.ac.at/ login --user robh --password fL-nxVRlIpYKHTx_ob4DRcCxezBmXidW92jZ4fcNbmsXxKlEcvY3HQbmDIL7pt20
+            hinkli push test_container/python_app.simg test_collection/python_app:latest
+            
   
 
