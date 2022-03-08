@@ -23,7 +23,7 @@ jobs:
             docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
 
       - run: |
-            pip3 install git+https://github.com/csf-ngs/hinkskalle-api
+            pip3 install git+https://github.com/robinlh/hinkskalle-api.git
             hinkli --base http://sregistry.ilifu.ac.za/ login --user robh --password $HINKLI_PASSWORD
             hinkli push test_container/python_app.simg test_collection/python_app:latest
             
