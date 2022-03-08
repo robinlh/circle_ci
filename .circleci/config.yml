@@ -8,21 +8,22 @@ workflows:
           context: dockerhub
 jobs:
   build:
-    machine: true
-    steps:
-      - checkout
-      - run: |
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin 
-            docker pull roblhall/singularity
+    machine:
+      image: ubuntu-2004:202010-01
+      steps:
+        - checkout
+        - run: |
+              echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin 
+              docker pull roblhall/singularity
 
-            docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
-            docker cp test_container/ singularity_files:/sfiles
+              docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
+              docker cp test_container/ singularity_files:/sfiles
 
-            docker run --privileged --volumes-from singularity_files roblhall/singularity:3.9.1 build /sfiles/test_container/python_app.simg /sfiles/test_container/python_app.def
-            docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
- 
-      - run: |
-            sudo apt-get install -y python3-pip
+              docker run --privileged --volumes-from singularity_files roblhall/singularity:3.9.1 build /sfiles/test_container/python_app.simg /sfiles/test_container/python_app.def
+              docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
+
+        - run: |
+              sudo apt-get install -y python3-pip
               
     
   
