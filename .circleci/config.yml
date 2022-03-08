@@ -22,7 +22,7 @@ jobs:
             docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
  
       - run: |
-            apt-get install -y python3-pip
+            sudo apt-get install -y python3-pip
               
     
   
