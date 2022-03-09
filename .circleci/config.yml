@@ -16,22 +16,32 @@ jobs:
           name: "Connect to Dockerhub and pull docker-singularity image"
           command: |
                 echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin 
-                docker pull roblhall/singularity
+                docker pull roblhall/singularity:3.9.1
+
       - run:
           name: "Create ephemeral container to be used as volume"
           command: docker create -v /sfiles --name singularity_files alpine:3.4 /bin/true
+
       - run:
-          name: "Copy container files in ephemeral container"
+          name: "Copy container files into ephemeral container"
           command: docker cp test_container/ singularity_files:/sfiles
+
       - run:
           name: "Build singularity image and copy back to VM"
           command: |
                 docker run --privileged --volumes-from singularity_files roblhall/singularity:3.9.1 build /sfiles/test_container/python_app.simg /sfiles/test_container/python_app.def
                 docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
 
-      - run: |
-            pip3 install git+https://github.com/robinlh/hinkskalle-api.git
-            hinkli --base http://sregistry.ilifu.ac.za/ login --user robh --password $HINKLI_PASSWORD
-            hinkli push test_container/python_app.simg test_collection/python_app:latest
+      - run:
+          name: "Install hinkskalle-api"
+          command: pip3 install git+https://github.com/robinlh/hinkskalle-api.git
+
+      - run:
+          name: "Login to sregistry"
+          command: hinkli --base http://sregistry.ilifu.ac.za/ login --user robh --password $HINKLI_PASSWORD
+          
+      -run:
+          name: "Push singularity image to registry"
+          command: hinkli push test_container/python_app.simg test_collection/python_app:latest
   
 
