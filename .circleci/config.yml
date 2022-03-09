@@ -39,8 +39,8 @@ jobs:
       - run:
           name: "Login to sregistry"
           command: hinkli --base http://sregistry.ilifu.ac.za/ login --user robh --password $HINKLI_PASSWORD
-          
-      -run:
+
+      - run:
           name: "Push singularity image to registry"
           command: hinkli push test_container/python_app.simg test_collection/python_app:latest
   
