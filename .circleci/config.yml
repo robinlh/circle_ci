@@ -16,7 +16,7 @@ jobs:
           name: "Connect to Dockerhub and pull docker-singularity image"
           command: |
                 echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin 
-                docker pull roblhall/singularity:3.9.1
+                docker pull roblhall/singularity:$SINGULARITY_VERSION
 
       - run:
           name: "Create ephemeral container to be used as volume"
@@ -29,7 +29,7 @@ jobs:
       - run:
           name: "Build singularity image and copy back to VM"
           command: |
-                docker run --privileged --volumes-from singularity_files roblhall/singularity:3.9.1 build /sfiles/test_container/python_app.simg /sfiles/test_container/python_app.def
+                docker run --privileged --volumes-from singularity_files roblhall/singularity:$SINGULARITY_VERSION build /sfiles/test_container/python_app.simg /sfiles/test_container/python_app.def
                 docker cp singularity_files:/sfiles/test_container/python_app.simg test_container/
 
       - run:
